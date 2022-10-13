@@ -1,0 +1,62 @@
+server:
+  port: '2000'
+
+spring:
+ profiles:
+  active: qa
+
+---
+
+spring:
+profiles: dev
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    url: mysql://localhost:3306/department-dev
+    password: Firebird14#
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
+welcome:
+  message: Development environment
+
+---
+
+spring:
+profiles: qa
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    url: mysql://localhost:3306/department-qa
+    password: Firebird14#
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
+welcome:
+  message: QA environment
+
+management:
+ endpoints:
+  web:
+   exposure:
+    include: "*"
+    exclude: "env,beans"
+
+---
+
+spring:
+profiles: prod
+  datasource:
+    driver-class-name: com.mysql.jdbc.Driver
+    username: root
+    url: mysql://localhost:3306/department-prod
+    password: Firebird14#
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: 'true'
+welcome:
+  message: Prod environment
+ 

@@ -4,6 +4,7 @@ import java.util.List;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.school.department.entity.Department;
+import com.school.department.error.DepartmentNotFoundException;
 import com.school.department.service.DepartmentService;
 import com.school.department.service.DepartmentServiceImp;
 
@@ -24,20 +26,22 @@ public class DepartmentController {
  @Autowired
  private DepartmentService departmentService;
 
- private final Logger LOGGER = LoggerFactory.getLogger(name: DepartmentController.class);
+ private final Logger LOGGER = LoggerFactory.getLogger(DepartmentController.class);
 
  @PostMapping("/departments")
  public Department saveDepartment(@Valid @RequestBody Department department) {
+  LOGGER.info("Inside saveDepartment of DepartmentController");
   return departmentService.saveDepartment(department);
  }
 
  @GetMapping("/departments")
  public List<Department> fetchDepartmentList() {
+  LOGGER.info("Inside fetchDepartmentList of DepartmentController");
   return departmentService.fetchDepartmentList();
  }
 
  @GetMapping("/departments/{id}")
- public Department fetchDepartmentById(@PathVariable("id") Long departmentId) {
+ public Department fetchDepartmentById(@PathVariable("id") Long departmentId) throws DepartmentNotFoundException {
   return departmentService.fetchDepartmentById(departmentId);
  }
 
